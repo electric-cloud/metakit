@@ -1,0 +1,7 @@
+base referer
+rect $header_8h.html 121,104 193,128
+rect $win_8h.html 252,56 302,80
+rect $mk4_8h.html 249,104 305,128
+rect $univ_8h.html 249,152 305,176
+rect $mk4_8inl.html 364,104 428,128
+rect $mk4str_8h.html 360,152 432,176

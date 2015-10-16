@@ -20,7 +20,7 @@ int MkView::Dispatcher(ClientData cd, Tcl_Interp *ip, int oc, Tcl_Obj *const *
     MkView *self = (MkView*)cd;
 
     if (self == 0 || self->interp != ip) {
-        Tcl_SetResult(ip, "Initialization error in dispatcher", TCL_STATIC);
+        Tcl_SetResult(ip, const_cast<char *>("Initialization error in dispatcher"), TCL_STATIC);
         return TCL_ERROR;
     }
     return self->Execute(oc, ov);
@@ -398,7 +398,7 @@ int MkView::SearchCmd() {
       break;
 
     default:
-      Tcl_SetResult(interp, "unsupported property type", TCL_STATIC);
+      Tcl_SetResult(interp, const_cast<char *>("unsupported property type"), TCL_STATIC);
       return TCL_ERROR;
   }
 
@@ -612,7 +612,7 @@ int MkView::LoopCmd() {
           _error = TCL_OK;
         else if (_error == TCL_ERROR) {
           char msg[100];
-          sprintf(msg, "\n  (\"mk::loop\" body line %d)", interp->errorLine);
+          sprintf(msg, "\n  (\"mk::loop\" body line %d)", Tcl_GetErrorLine(interp));
           Tcl_AddObjErrorInfo(interp, msg,  - 1);
         }
         break;

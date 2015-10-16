@@ -133,7 +133,7 @@ c4_Bytes &c4_Sequence::Buffer() {
 
 // 1.8.5: extra buffer to hold returned description strings
 const char *c4_Sequence::UseTempBuffer(const char *str_) {
-  return strcpy((char*)Buffer().SetBuffer(strlen(str_) + 1), str_);
+  return strcpy((char*)Buffer().SetBuffer((int)strlen(str_) + 1), str_);
 }
 
 /// Change number of rows, either by inserting or removing them
@@ -576,7 +576,7 @@ c4_StringRef::operator const char *()const {
 }
 
 c4_StringRef &c4_StringRef::operator = (const char *value_) {
-  SetData(c4_Bytes(value_, strlen(value_) + 1));
+  SetData(c4_Bytes(value_, (int)strlen(value_) + 1));
   return  *this;
 }
 

@@ -1,0 +1,9 @@
+base referer
+rect $classc4___property.html 8,152 101,176
+rect $classc4___bytes_prop.html 154,8 258,32
+rect $classc4___double_prop.html 150,56 262,80
+rect $classc4___float_prop.html 157,104 256,128
+rect $classc4___int_prop.html 164,152 249,176
+rect $classc4___long_prop.html 157,200 256,224
+rect $classc4___string_prop.html 154,248 258,272
+rect $classc4___view_prop.html 157,296 256,320

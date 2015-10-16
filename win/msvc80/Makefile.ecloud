@@ -1,0 +1,234 @@
+# -*- Makefile -*- for building Metakit on Windows, because it was
+# just too much of a hassle to work with all those project files.
+# Expects to be run from builds/$(ARCH).
+
+METAKIT_VERSION = 2.4.9.7
+
+TOP = ../..
+
+INSTALL_DIR = $(TOOLS)/metakit/$(METAKIT_VERSION)/$(ARCH)
+
+.PHONY:	all shared static test testapp dump clean
+
+all:	shared static testapp dump tcl
+
+# Sources for the library itself.
+METAKIT_SRCS = column.cpp custom.cpp derived.cpp field.cpp fileio.cpp \
+	format.cpp handler.cpp persist.cpp remap.cpp std.cpp store.cpp \
+	string.cpp table.cpp univ.cpp view.cpp viewx.cpp
+LIBINCDIR = $(TOP)/include
+LIBSRCDIR = $(TOP)/src
+
+# Sources for the unit test program.
+TEST_SRCS = regress.cpp tbasic1.cpp tbasic2.cpp tcusto1.cpp tcusto2.cpp \
+	tdiffer.cpp textend.cpp tformat.cpp tlimits.cpp tmapped.cpp \
+	tnotify.cpp tresize.cpp tstore1.cpp tstore2.cpp tstore3.cpp \
+	tstore4.cpp tstore5.cpp
+TESTSRCDIR = $(TOP)/tests
+
+# Sources for the Tcl plugin
+MKTCL_SRCS = mk4tcl.cpp mk4too.cpp
+MKTCLSRCDIR = $(TOP)/tcl
+
+# Sources for the dump program.
+DUMP_SRCS = dump.cpp
+DEMOSRCDIR = $(TOP)/demos
+
+MT = mt
+
+# /Zi: always produce PDB files, even in release mode.
+# /EHsc: C++ exception handling
+# /GF: enable string pooling
+# /Gy: enable function-level linking
+# /W4: warnings
+# /I $(TOP)/win : pick up config.h
+# /D _CRT_SECURE_NO_WARNINGS :  avoid warning C4996
+CFLAGS = /nologo /c /Zi /I $(TOP)/win /I $(LIBINCDIR) /EHsc /GF /Gy /W4 /D "_MBCS" /D _CRT_SECURE_NO_WARNINGS
+DLL_CFLAGS = /D "_USRDLL" /D "MKDLL_EXPORTS" /D "_WINDLL"
+# /debug: always link a PDB file, even in release mode.
+LDFLAGS = /nologo /debug /incremental:no
+DLL_LDFLAGS = /DLL
+
+ARFLAGS = /nologo
+
+ifeq ($(DEBUG),yes)
+# /MDd:  link with debug multi-threaded MSVC runtime DLL
+CFLAGS += /MDd /D "_DEBUG"
+BUILD = Debug
+DLLSUFFIX = _d
+LIBSUFFIX = _sd
+else
+# /MDd:  link with release multi-threaded MSVC runtime DLL
+# /O1:   create small code
+# /Ob2:  maximum inline expansion
+CFLAGS += /MD /D "NDEBUG" /O1 /Ob2
+BUILD = Release
+DLLSUFFIX =
+LIBSUFFIX = _s
+endif
+
+ARFLAGS += /MACHINE:$(MACHINE)
+LDFLAGS += /MACHINE:$(MACHINE)
+
+###
+### Building for 32-bit
+###
+ifeq ($(ARCH),i686_win32)
+CFLAGS += -DWIN32
+endif
+
+###
+### Building for 64-bit
+###
+ifeq ($(ARCH),i686_win64)
+CFLAGS += -DWIN64 -D_WIN64 -D_M_AMD64
+endif
+
+###
+### These are probably not all required, but they're the defaults when I
+### build it with msvc
+###
+LDLIBS = odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib \
+	winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib \
+	oleaut32.lib uuid.lib odbc32.lib odbccp32.lib
+
+###
+### mklib - static library
+###
+MKLIBDIR = mklib/$(BUILD)
+MKLIB = $(MKLIBDIR)/mk4-$(METAKIT_VERSION)$(LIBSUFFIX).lib
+MKLIBOBJS = $(addprefix $(MKLIBDIR)/,$(METAKIT_SRCS:.cpp=.obj))
+
+$(MKLIB):	$(MKLIBOBJS)
+	$(AR) $(ARFLAGS) $^ /OUT:$@
+
+$(MKLIBDIR)/%.obj:	$(LIBSRCDIR)/%.cpp
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) /D "_LIB" /D "q4_INLINE" $< /Fo$@ /Fd$(basename $@).pdb
+
+###
+### mkdll - shared library
+###
+MKDLLDIR = mkdll/$(BUILD)
+MKDLL = $(MKDLLDIR)/mk4-$(METAKIT_VERSION)$(DLLSUFFIX).dll
+MKDLLOBJS = $(addprefix $(MKDLLDIR)/,$(METAKIT_SRCS:.cpp=.obj))
+
+$(MKDLL):	$(MKDLLOBJS)
+	$(LD) $(LDFLAGS) $(DLL_LDFLAGS) \
+	$^ \
+	/OUT:$@ \
+	/PDB:$(basename $@).pdb \
+	/IMPLIB:$(basename $@).lib \
+	/MANIFEST /MANIFESTFILE:$(basename $@).manifest
+ifeq ($(VCVER),vc8)
+	$(MT) /nologo /outputresource:"$@;#2" /manifest $(basename $@).manifest
+endif
+
+$(MKDLLDIR)/%.obj:	$(LIBSRCDIR)/%.cpp
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $(DLL_CFLAGS) $< /Fo$@ /Fd$(basename $@).pdb
+
+# /O1 /Ob2 /I "..\..\include" /I ".." /D "WIN64" /D "_WIN64" /D "_M_AMD64" /D "NDEBUG" /D "_WINDOWS" /D "_USRDLL" /D "MKDLL_EXPORTS" /D "_VC80_UPGRADE=0x0700" /D "_WINDLL" /D "_MBCS" /GF /FD /EHsc /MD /Gy /Fp"..\..\builds\i686_win64\mkdll\Release\mkdll.pch" /Fo"..\..\builds\i686_win64\mkdll\Release\\" /Fd"..\..\builds\i686_win64\mkdll\Release\\" /W4 /c /Zi ..\..\src\viewx.cpp
+
+# /OUT:"..\..\builds\i686_win64\mkdll\Release\mk4-2.4.9.7-vc70.dll" /INCREMENTAL:NO /DLL /MANIFEST /MANIFESTFILE:"..\..\builds\i686_win64\mkdll\Release\mk4-2.4.9.7-vc70.dll.intermediate.manifest" /DEBUG /PDB:"..\..\builds\i686_win64\mkdll\Release\mk4-2.4.9.7.pdb" /IMPLIB:"..\..\builds\i686_win64\mkdll\Release\mk4-2.4.9.7-vc70.lib" /MACHINE:X64 odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib
+
+###
+### mk4tcl.dll - tcl plugin
+###
+MKTCLDIR = mktcl/$(BUILD)
+MKTCLDLL = $(MKTCLDIR)/mk4tcl.dll
+MKTCLDLLOBJS = $(addprefix $(MKTCLDIR)/,$(MKTCL_SRCS:.cpp=.obj))
+
+$(MKTCLDLL):	$(MKTCLDLLOBJS)
+	$(LD) $(LDFLAGS) $(DLL_LDFLAGS) \
+	$^ \
+	$(TCL_ROOT)/lib/tclstub86.lib \
+	$(MKDLL:.dll=.lib) \
+	/OUT:$@ \
+	/PDB:$(basename $@).pdb \
+	/IMPLIB:$(basename $@).lib \
+	/MANIFEST /MANIFESTFILE:$(basename $@).manifest
+ifeq ($(VCVER),vc8)
+	$(MT) /nologo /outputresource:"$@;#2" /manifest $(basename $@).manifest
+endif
+
+$(MKTCLDIR)/%.obj:	$(MKTCLSRCDIR)/%.cpp
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) /D _USRDLL /D MKTCL_EXPORTS /D TCL_THREADS /D USE_TCL_STUBS -I$(TCL_ROOT)/include $^ /Fo$@ /Fd$(basename $@).pdb
+
+###
+### mktest - unit tests
+###
+
+MKTESTDIR = mktest/$(BUILD)
+MKTEST = $(MKTESTDIR)/mktest.exe
+MKTESTOBJS = $(addprefix $(MKTESTDIR)/,$(TEST_SRCS:.cpp=.obj))
+
+$(MKTEST):	$(MKTESTOBJS) $(MKLIB)
+	$(LD) $(LDFLAGS) $(MKTESTOBJS) \
+	/out:$@ \
+	/pdb:$(basename $@).pdb \
+	/manifest /manifestfile:$(basename $@).manifest \
+	$(LDLIBS) $(MKLIB) \
+	/subsystem:console
+ifeq ($(VCVER),vc8)
+	$(MT) /nologo /outputresource:"$@;#1" /manifest $(basename $@).manifest
+endif
+
+$(MKTESTDIR)/%.obj:	$(TESTSRCDIR)/%.cpp
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) /D "_CONSOLE" $^ /Fo$@ /Fd$(basename $@).pdb
+
+###
+### mkdump - database dump utility
+###
+
+MKDUMPDIR = mkdump/$(BUILD)
+MKDUMP = $(MKDUMPDIR)/mkdump$(DLLSUFFIX).exe
+MKDUMPOBJS = $(addprefix $(MKDUMPDIR)/,$(DUMP_SRCS:.cpp=.obj))
+
+$(MKDUMP):	$(MKDUMPOBJS) $(MKLIB)
+	$(LD) $(LDFLAGS) $(MKDUMPOBJS) /out:$@ $(MKLIB)
+ifeq ($(VCVER),vc8)
+	$(MT) /nologo /outputresource:"$@;#1" /manifest $@.manifest
+endif
+
+$(MKDUMPDIR)/%.obj:	$(DEMOSRCDIR)/%.cpp
+	@mkdir -p $(@D)
+	$(CC) $(CFLAGS) $^ /Fo$@ /Fd$(basename $@).pdb
+
+###
+### Human-readable targets
+###
+
+shared:	$(MKDLL)
+
+static:	$(MKLIB)
+
+tcl:	$(MKTCLDLL)
+
+testapp:	$(MKTEST)
+
+ARENA = $(TOP)/arena
+
+test:	$(MKTEST)
+	rm -rf $(ARENA)
+	mkdir -p $(ARENA)/tests/ok
+	cp $(TESTSRCDIR)/ok/* $(ARENA)/tests/ok
+	cd $(ARENA) && $(CURDIR)/$(MKTEST)
+
+dump:	$(MKDUMP)
+
+install:
+	mkdir -p $(INSTALL_DIR)/bin $(INSTALL_DIR)/include $(INSTALL_DIR)/lib \
+	$(TCL_ROOT)/lib/Mk4tcl
+	cp $(MKDUMP) $(INSTALL_DIR)/bin
+	cp $(MKDLL) $(INSTALL_DIR)/bin
+	cp $(basename $(MKDLL)).lib $(INSTALL_DIR)/lib
+	cp $(MKLIB) $(INSTALL_DIR)/lib
+	-cp $(TOP)/include/* $(INSTALL_DIR)/include
+	cp $(MKTCLDLL) $(TCL_ROOT)/lib/Mk4tcl
+	echo "package ifneeded Mk4tcl $(METAKIT_VERSION) [list load [file join \$$dir mk4tcl.dll] Mk4tcl]" > $(TCL_ROOT)/lib/Mk4tcl/pkgIndex.tcl
+
+clean:
+	rm -rf $(MKDLLDIR) $(MKLIBDIR) $(MKDUMPDIR) $(MKTESTDIR)

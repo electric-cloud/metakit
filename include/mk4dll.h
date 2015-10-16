@@ -31,6 +31,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Declarations in this file
 
+class d4_DLL c4_BaseArray;
 class d4_DLL c4_Bytes;
 class d4_DLL c4_BytesProp;
 class d4_DLL c4_BytesRef;
@@ -46,6 +47,7 @@ class d4_DLL c4_IntProp;
 class d4_DLL c4_IntRef;
 class d4_DLL c4_LongRef;
 class d4_DLL c4_Property;
+class d4_DLL c4_PtrArray;
 class d4_DLL c4_Reference;
 class d4_DLL c4_Row;
 class d4_DLL c4_RowRef;

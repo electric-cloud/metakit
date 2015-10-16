@@ -126,7 +126,7 @@ c4_String::c4_String(char ch, int n /* =1 */) {
 }
 
 c4_String::c4_String(const char *p) {
-  Init(p, p != 0 ? strlen(p): 0);
+  Init(p, p != 0 ? (int)strlen(p): 0);
 }
 
 c4_String::c4_String(const c4_String &s) {
@@ -199,7 +199,7 @@ void c4_String::Init(const void *p, int n) {
 
 int c4_String::FullLength()const {
   int n = _value[1];
-  return n < 255 ? n : n + strlen((const char*)_value + 2+255);
+  return n < 255 ? n : n + (int)strlen((const char*)_value + 2+255);
 }
 
 c4_String c4_String::Mid(int nFirst, int nCount)const {
@@ -263,11 +263,11 @@ int c4_String::Find(const char *sub)const {
 }
 
 c4_String c4_String::SpanIncluding(const char *set)const {
-  return Left(strspn(Data(), set));
+  return Left((int)strspn(Data(), set));
 }
 
 c4_String c4_String::SpanExcluding(const char *set)const {
-  return Left(strcspn(Data(), set));
+  return Left((int)strcspn(Data(), set));
 }
 
 /////////////////////////////////////////////////////////////////////////////

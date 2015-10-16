@@ -33,7 +33,7 @@ c4_Field::c4_Field(const char * &description_, c4_Field *parent_): _type(0) {
         _name = c4_String(description_, p - description_);
         _type = p[1] &~0x20; // force to upper case
     } else {
-        _name = c4_String(description_, n);
+        _name = c4_String(description_, (int)n);
         _type = 'S';
     }
 

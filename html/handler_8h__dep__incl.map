@@ -1,0 +1,12 @@
+base referer
+rect $custom_8h.html 141,32 216,56
+rect $derived_8cpp.html 133,80 224,104
+rect $format_8cpp.html 137,128 220,152
+rect $handler_8cpp.html 133,176 224,200
+rect $persist_8cpp.html 136,224 221,248
+rect $remap_8cpp.html 137,272 220,296
+rect $store_8cpp.html 141,320 216,344
+rect $table_8cpp.html 141,368 216,392
+rect $viewx_8cpp.html 138,416 218,440
+rect $custom_8cpp.html 273,8 361,32
+rect $view_8cpp.html 281,56 353,80

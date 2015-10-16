@@ -1,9 +1,9 @@
 /* Internal stub code, copied from CritLib */
 
-TclStubs *tclStubsPtr;
-TclPlatStubs *tclPlatStubsPtr;
-struct TclIntStubs *tclIntStubsPtr;
-struct TclIntPlatStubs *tclIntPlatStubsPtr;
+const TclStubs *tclStubsPtr;
+const TclPlatStubs *tclPlatStubsPtr;
+const struct TclIntStubs *tclIntStubsPtr;
+const struct TclIntPlatStubs *tclIntPlatStubsPtr;
 
 static int MyInitStubs(Tcl_Interp *ip) {
   typedef struct  {
@@ -16,8 +16,7 @@ static int MyInitStubs(Tcl_Interp *ip) {
   HeadOfInterp *hoi = (HeadOfInterp*)ip;
 
   if (hoi->stubTable == NULL || hoi->stubTable->magic != TCL_STUB_MAGIC) {
-    ip->result = "This extension requires stubs-support.";
-    ip->freeProc = TCL_STATIC;
+    Tcl_SetResult(ip, const_cast<char *>("This extension requires stubs-support."), TCL_STATIC);
     return 0;
   }
 

@@ -95,9 +95,12 @@ install-mk: libmk4$(LIBEXT)
 	mkdir -p $(DESTDIR)$(includedir) $(DESTDIR)$(libdir)
 	$(INSTALL_DATA) $(srcdir)/../include/mk4.h \
 			$(srcdir)/../include/mk4.inl \
+			$(srcdir)/../include/mk4dll.h \
+			$(srcdir)/../include/mk4io.h \
 			$(srcdir)/../include/mk4str.h \
 			$(srcdir)/../include/mk4str.inl $(DESTDIR)$(includedir)
-	$(INSTALL_PROGRAM) libmk4$(LIBEXT) $(DESTDIR)$(libdir)
+	$(INSTALL_PROGRAM) libmk4$(LIBEXT).$(METAKIT_VERSION) $(DESTDIR)$(libdir)
+	ln -s libmk4$(LIBEXT).$(METAKIT_VERSION) $(DESTDIR)$(libdir)/libmk4$(LIBEXT)
 	if [ '${LIBEXT}' = '.a' ]; then ranlib $(DESTDIR)$(libdir)/libmk4.a; fi
 
 install-tcl: Mk4tcl$(LIBEXT)
@@ -134,7 +137,8 @@ libmk4$(LIB_SUFFIX): $(LOBJS)
 	ranlib $@
 
 libmk4$(SHLIB_SUFFIX): $(LOBJS) $(LINK_SPECIAL_FILES)
-	$(SHLIB_LD) -o $@ $(LOBJS) $(LINK_SPECIAL_FLAGS)
+	$(SHLIB_LD) -o $@.$(METAKIT_VERSION) $(LOBJS) $(LINK_SPECIAL_FLAGS)
+	ln -s $@.$(METAKIT_VERSION) $@
 
 Mk4tcl$(LIB_SUFFIX): mk4tcl.o mk4too.o $(LOBJS)
 	ar rcu $@ mk4tcl.o mk4too.o $(LOBJS)

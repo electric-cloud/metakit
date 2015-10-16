@@ -1,0 +1,8 @@
+base referer
+rect $classc4___bytes_ref.html 7,83 103,107
+rect $classc4___double_ref.html 127,83 231,107
+rect $classc4___float_ref.html 255,83 349,107
+rect $classc4___int_ref.html 373,83 450,107
+rect $classc4___long_ref.html 474,83 567,107
+rect $classc4___string_ref.html 591,83 690,107
+rect $classc4___view_ref.html 714,83 805,107

@@ -1,80 +1,140 @@
-<?xml version="1.0" encoding = "Windows-1252"?>
+<?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.00"
+	Version="8.00"
 	Name="mkdll"
-	SccProjectName=""
-	SccLocalPath="">
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory=".\..\..\builds"
 			IntermediateDirectory=".\..\..\builds\msvc70\mkdll\Release"
 			ConfigurationType="2"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC70.vsprops"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\..\builds/mkdll.tlb"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="1"
 				InlineFunctionExpansion="2"
 				AdditionalIncludeDirectories="..\..\include,.."
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;MKDLL_EXPORTS"
-				StringPooling="TRUE"
+				StringPooling="true"
 				RuntimeLibrary="2"
-				EnableFunctionLevelLinking="TRUE"
+				EnableFunctionLevelLinking="true"
 				PrecompiledHeaderFile=".\..\..\builds\msvc70\mkdll\Release/mkdll.pch"
 				AssemblerListingLocation=".\..\..\builds\msvc70\mkdll\Release/"
 				ObjectFile=".\..\..\builds\msvc70\mkdll\Release/"
 				ProgramDataBaseFileName=".\..\..\builds\msvc70\mkdll\Release/"
 				WarningLevel="4"
-				SuppressStartupBanner="TRUE"
-				CompileAs="0"/>
+				SuppressStartupBanner="true"
+				CompileAs="0"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile="..\..\builds\mk4vc70.dll"
+				OutputFile="..\..\builds\mk4-2.4.9.7-vc70.dll"
 				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				ProgramDatabaseFile=".\..\..\builds/mk4vc70.pdb"
-				ImportLibrary=".\..\..\builds/mk4vc70.lib"/>
+				SuppressStartupBanner="true"
+				ProgramDatabaseFile=".\..\..\builds/mk4-2.4.9.7-vc70.pdb"
+				ImportLibrary=".\..\..\builds/mk4-2.4.9.7-vc70.lib"
+			/>
 			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\builds/mkdll.tlb"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory=".\..\..\builds"
 			IntermediateDirectory=".\..\..\builds\msvc70\mkdll\Debug"
 			ConfigurationType="2"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC70.vsprops"
 			UseOfMFC="0"
-			ATLMinimizesCRunTimeLibraryUsage="FALSE"
-			CharacterSet="2">
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="true"
+				SuppressStartupBanner="true"
+				TargetEnvironment="1"
+				TypeLibraryName=".\..\..\builds/mkdll.tlb"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -87,174 +147,233 @@
 				ObjectFile=".\..\..\builds\msvc70\mkdll\Debug/"
 				ProgramDataBaseFileName=".\..\..\builds\msvc70\mkdll\Debug/"
 				WarningLevel="4"
-				SuppressStartupBanner="TRUE"
+				SuppressStartupBanner="true"
 				DebugInformationFormat="3"
-				CompileAs="0"/>
+				CompileAs="0"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/MACHINE:I386"
 				AdditionalDependencies="odbc32.lib odbccp32.lib"
-				OutputFile="..\..\builds\mk4vc70_d.dll"
+				OutputFile="..\..\builds\mk4-2.4.9.7-vc70_d.dll"
 				LinkIncremental="1"
-				SuppressStartupBanner="TRUE"
-				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile=".\..\..\builds/mk4vc70_d.pdb"
-				ImportLibrary=".\..\..\builds/mk4vc70_d.lib"/>
+				SuppressStartupBanner="true"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile=".\..\..\builds/mk4-2.4.9.7-vc70_d.pdb"
+				ImportLibrary=".\..\..\builds/mk4-2.4.9.7-vc70_d.lib"
+			/>
 			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="TRUE"
-				SuppressStartupBanner="TRUE"
-				TargetEnvironment="1"
-				TypeLibraryName=".\..\..\builds/mkdll.tlb"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
+				Name="VCWebDeploymentTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
-			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
+			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
+			>
 			<File
-				RelativePath="..\..\src\column.cpp">
+				RelativePath="..\..\src\column.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\custom.cpp">
+				RelativePath="..\..\src\custom.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\derived.cpp">
+				RelativePath="..\..\src\derived.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\field.cpp">
+				RelativePath="..\..\src\field.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\fileio.cpp">
+				RelativePath="..\..\src\fileio.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\format.cpp">
+				RelativePath="..\..\src\format.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\handler.cpp">
+				RelativePath="..\..\src\handler.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\persist.cpp">
+				RelativePath="..\..\src\persist.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\remap.cpp">
+				RelativePath="..\..\src\remap.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\std.cpp">
+				RelativePath="..\..\src\std.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\store.cpp">
+				RelativePath="..\..\src\store.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\string.cpp">
+				RelativePath="..\..\src\string.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\table.cpp">
+				RelativePath="..\..\src\table.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\univ.cpp">
+				RelativePath="..\..\src\univ.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\view.cpp">
+				RelativePath="..\..\src\view.cpp"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\viewx.cpp">
+				RelativePath="..\..\src\viewx.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
-			Filter="h;hpp;hxx;hm;inl">
+			Filter="h;hpp;hxx;hm;inl"
+			>
 			<File
-				RelativePath="..\..\src\column.h">
+				RelativePath="..\..\src\column.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\column.inl">
+				RelativePath="..\..\src\column.inl"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\custom.h">
+				RelativePath="..\..\src\custom.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\derived.h">
+				RelativePath="..\..\src\derived.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\field.h">
+				RelativePath="..\..\src\field.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\field.inl">
+				RelativePath="..\..\src\field.inl"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\format.h">
+				RelativePath="..\..\src\format.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\handler.h">
+				RelativePath="..\..\src\handler.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\handler.inl">
+				RelativePath="..\..\src\handler.inl"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\header.h">
+				RelativePath="..\..\src\header.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\mfc.h">
+				RelativePath="..\..\src\mfc.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\include\mk4.h">
+				RelativePath="..\..\include\mk4.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\include\mk4.inl">
+				RelativePath="..\..\include\mk4.inl"
+				>
 			</File>
 			<File
-				RelativePath="..\..\include\mk4dll.h">
+				RelativePath="..\..\include\mk4dll.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\include\mk4io.h">
+				RelativePath="..\..\include\mk4io.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\include\mk4str.h">
+				RelativePath="..\..\include\mk4str.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\include\mk4str.inl">
+				RelativePath="..\..\include\mk4str.inl"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\msvc.h">
+				RelativePath="..\..\src\msvc.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\persist.h">
+				RelativePath="..\..\src\persist.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\std.h">
+				RelativePath="..\..\src\std.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\store.h">
+				RelativePath="..\..\src\store.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\store.inl">
+				RelativePath="..\..\src\store.inl"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\univ.h">
+				RelativePath="..\..\src\univ.h"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\univ.inl">
+				RelativePath="..\..\src\univ.inl"
+				>
 			</File>
 			<File
-				RelativePath="..\..\src\win.h">
+				RelativePath="..\..\src\win.h"
+				>
 			</File>
 		</Filter>
 	</Files>

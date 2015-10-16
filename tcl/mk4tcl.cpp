@@ -979,7 +979,7 @@ const c4_Property &AsProperty(Tcl_Obj *objPtr, const c4_View &view_) {
   void *tag = (&view_[0])._seq; // horrific hack to get at c4_Sequence pointer
   if (objPtr->typePtr !=  &mkPropertyType || objPtr
     ->internalRep.twoPtrValue.ptr1 != tag) {
-    Tcl_ObjType *oldTypePtr = objPtr->typePtr;
+    const Tcl_ObjType *oldTypePtr = objPtr->typePtr;
 
     char type = 'S';
 
@@ -1083,7 +1083,7 @@ int SetCursorFromAny(Tcl_Interp *interp, Tcl_Obj *objPtr) {
   }
 
   if (objPtr->typePtr !=  &mkCursorType) {
-    Tcl_ObjType *oldTypePtr = objPtr->typePtr;
+    const Tcl_ObjType *oldTypePtr = objPtr->typePtr;
 
     const char *string = Tcl_GetStringFromObj(objPtr, 0);
 
@@ -1383,7 +1383,8 @@ int Tcl::tcl_GetIndexFromObj(Tcl_Obj *obj_, const char **table_, const char
   *msg_) {
   int index =  - 1;
   if (!_error)
-    _error = Tcl_GetIndexFromObj(interp, obj_, (CONST84 char **)table_, msg_, 0,
+    _error = Tcl_GetIndexFromObj(interp, obj_, (CONST84 char **)table_,
+            const_cast<char *>(msg_), 0,
       &index);
   return _error == TCL_OK ? index :  - 1;
 }
@@ -2156,7 +2157,7 @@ int MkTcl::LoopCmd() {
         _error = TCL_OK;
       else if (_error == TCL_ERROR) {
         char msg[100];
-        sprintf(msg, "\n  (\"mk::loop\" body line %d)", interp->errorLine);
+        sprintf(msg, "\n  (\"mk::loop\" body line %d)", Tcl_GetErrorLine(interp));
         Tcl_AddObjErrorInfo(interp, msg,  - 1);
       }
       break;
